@@ -18,7 +18,7 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install -e .",
+	"postCreateCommand": "bash .devcontainer/post_create_command.sh",
 	// Configure tool-specific properties.
 	// "customizations": {},
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
@@ -36,7 +36,12 @@
 				"ms-python.python",
 				"charliermarsh.ruff",
 				"wayou.vscode-todo-highlight",
-				"redhat.vscode-yaml"
+				"redhat.vscode-yaml",
+				"ms-vscode.live-server",
+				"openai.chatgpt",
+				"pejmannikram.vscode-auto-scroll",
+				"eamodio.gitlens",
+				"Anthropic.claude-code"
 			],
 			"settings": {
 				"chat.tools.global.autoApprove": true,
@@ -47,17 +52,21 @@
 	"runArgs": ["--name", "aiomegfile-3.10"],
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": "../..",
+		"context": "..",
 		"args": {
-			"PIP_INDEX_URL": "https://pypi.tuna.tsinghua.edu.cn/simple"
+			"PIP_INDEX_URL": "https://pypi.tuna.tsinghua.edu.cn/simple",
+			"PDM_USE_VENV": "true"
 		}
 	},
 	"containerEnv": {
 		"PIP_INDEX_URL": "https://pypi.tuna.tsinghua.edu.cn/simple",
+		"PDM_USE_VENV": "true",
 		"GIT_EDITOR": "vim"
 	},
 	"mounts": [
 		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind",
-		"source=${localEnv:HOME}/.zsh_history,target=/home/vscode/.zsh_history,type=bind"
+		"source=${localEnv:HOME}/.zsh_history,target=/home/vscode/.zsh_history,type=bind",
+		"source=${localEnv:HOME}/.codex,target=/home/vscode/.codex,type=bind",
+		"source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"
 	]
 }
